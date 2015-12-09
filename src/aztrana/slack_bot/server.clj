@@ -1,7 +1,8 @@
 (ns aztrana.slack-bot.server
   (:require [taoensso.timbre :as timbre]
             [environ.core :refer [env]]
-            [clj-slack-client.core :as slack])
+            [clj-slack-client.core :as slack]
+            [clj-slack-client.team-state :as state])
   (:gen-class))
 
 (def slack-api-token (env :slack-api-token))
