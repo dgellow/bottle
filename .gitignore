@@ -1,0 +1,13 @@
+# Build directory
+target
+out
+
+# Debugging
+.nrepl-port
+.lein-env
+
+# Mac OS X
+.DS_Store
+
+# nREPL
+.nrepl*
