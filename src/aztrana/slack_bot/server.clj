@@ -23,7 +23,7 @@
   (if slack-api-token
     (do
       (timbre/info "Starting slack bot...")
-      (slack/connect slack-api-token handle-slack-event {:log false}))
+      (slack/connect slack-api-token handle-slack-events {:log false}))
     (timbre/error "Missing environment variable SLACK_API_TOKEN")))
 
 (defn -main []
