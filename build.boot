@@ -5,6 +5,7 @@
                  [com.taoensso/timbre "4.1.4"]
                  [com.novemberain/monger "3.0.0"]
                  [http-kit "2.1.19"]
+                 [org.clojure/core.async "0.2.374"]
                  [org.clojure/clojure "1.7.0"]])
 
 (task-options! pom {:project 'aztrana/slack-bot

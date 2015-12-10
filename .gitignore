@@ -5,6 +5,7 @@ out
 # Debugging
 .nrepl-port
 .lein-env
+.dev*
 
 # Mac OS X
 .DS_Store
