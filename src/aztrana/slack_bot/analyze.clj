@@ -119,6 +119,9 @@
                     (replace "‘" "'")
                     (replace "”" "\"")
                     (replace "“" "\"")
+                    ((fn [s]
+                      (timbre/debug s)
+                      s))
                     read-string
                     eval)
                  (catch Exception e
