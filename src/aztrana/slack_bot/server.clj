@@ -6,7 +6,8 @@
             [monger.collection :as mongcol]
             [clj-slack-client.core :as slack]
             [clj-slack-client.team-state :as state]
-            [clj-slack-client.rtm-transmit :as transmit])
+            [clj-slack-client.rtm-transmit :as transmit]
+            [org.httpkit.server :as http])
   (:import [com.mongodb MongoOptions ServerAddress])
   (:gen-class))
 
@@ -161,10 +162,26 @@
       (slack/connect slack-api-token handle-slack-events {:log false}))
     (timbre/error "Missing environment variable SLACK_API_TOKEN")))
 
+(defn web-handler [req]
+  {:status  200
+   :headers {"Content-Type" "text/html"}
+   :body    "hello!"})
+
+(defonce web-server (atom nil))
+
+(defn stop-web! []
+  (when-not (nil? @web-server)
+    (@web-server :timeout 100)
+    (reset! web-server nil)))
+(defn start-web!
+  (reset! web-server (http/run-server #'web-handler {:port (env :port)})))
+
 (defn stop-app! []
+  (stop-web!)
   (stop-db!)
   (stop-slack!))
 (defn start-app! []
+  (start-web!)
   (start-db!)
   (start-slack!))
 
