@@ -114,7 +114,13 @@
 
 (defmethod interpret :eval
   [{:keys [polite verb-object]}]
-  {:message (try (eval (read-string verb-object))
+  {:message (try (-> verb-object
+                    (replace "&amp;" "&")
+                    (replace "‘" "'")
+                    (replace "”" "\"")
+                    (replace "“" "\"")
+                    read-string
+                    eval)
                  (catch Exception e
                    (format "_Exception_ \n```\n%s\n```" (.getMessage e))))})
 
