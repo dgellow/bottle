@@ -38,6 +38,8 @@
      {:polite politness
       :user user}
      (cond
+       ;; sakoboy
+       (.contains text "uh???") {:verb :sakoboy}
        ;; stop bot
        (.contains text "leave us") {:verb :leave}
        ;; help
@@ -56,6 +58,10 @@
        :else nil))))
 
 (defmulti interpret :verb)
+
+(defmethod interpret :sakoboy
+  [_]
+  {:message "https://files.slack.com/files-pri/T038PG7EE-F0G9KRXE1/manny_in_real_life.jpg"})
 
 (defmethod interpret :help
   [{:keys [polite]}]
