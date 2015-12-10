@@ -169,12 +169,20 @@
 
 (defonce web-server (atom nil))
 
+(defn parse-port [port]
+  (when port
+    (cond
+      (string? port) (Integer/parseInt port)
+      (number? port) port
+      :else (throw (Exception. (str "invalid port value: " port))))))
+
 (defn stop-web! []
   (when-not (nil? @web-server)
     (@web-server :timeout 100)
     (reset! web-server nil)))
 (defn start-web! []
-  (reset! web-server (http/run-server #'web-handler {:port (env :port)})))
+  (reset! web-server (http/run-server #'web-handler
+                                      {:port (parse-port (env :port))})))
 
 (defn stop-app! []
   (stop-web!)
