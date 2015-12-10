@@ -61,7 +61,7 @@
   [{:keys [polite]}]
   (let [actions-str
         (join "\n"
-              (map #(str (first %)
+              (map #(str (format "`%s`" (first %))
                          "\t\t"
                          (second %))
                 bot-actions))]
