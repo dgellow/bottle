@@ -72,6 +72,10 @@
        (let [[_ verb-object] (re-find #"(?:(\w+)|<@(.+)>) location" text)]
          {:verb :ask-location
           :verb-object verb-object})
+       ;; hello
+       (or (.contains text "hello")
+          (.contains text "hi")
+          (.contains text "hey")) {:verb :greet}
        :else nil))))
 
 
@@ -81,6 +85,10 @@
   Do something based on :verb.
   Returns another map {:action (fn []) :message \"str\"}"
   :verb)
+
+(defmethod interpret :greet
+  [{:keys [user]}]
+  {:message (format "%s Hi buddy" user)})
 
 (defmethod interpret :sakoboy
   [_]
