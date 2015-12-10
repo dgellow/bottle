@@ -55,6 +55,7 @@
        (let [[_ verb-object] (re-find #"mov(e|ing) to (.+)\.?" text)]
          {:verb :set-location
           :verb-object verb-object})
+       ;; ask location
        (.contains text "location") {:verb :ask-locations}
        :else nil))))
 
@@ -110,9 +111,11 @@
               "Ok ok, I'm leaving but I don't like your tone.")})
 
 (defmethod interpret :default
-  [tokens]
-  (println tokens)
-  {:message "uh?"})
+  [{:keys [user]}]
+  {:message
+   (if (= "sako" (state/id->name))
+     "uh?"
+     "Sorry mate, my actions are limited. Ask me to `help` you if you want to see what I can do for you.")})
 
 (defmulti handle-slack-events (fn [event] ((juxt :type :subtype) event)))
 
