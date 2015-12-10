@@ -81,6 +81,11 @@
          (timbre/debug verb-object)
          {:verb :eval
           :verb-object verb-object})
+       ;; thank you
+       (or (.contains text "thank")
+          (.contains text "great")
+          (.contains text "nice")
+          (.contains text "good job")) {:verb :thanks}
        ;; hello
        (or (.contains text "hello")
           (.contains text "hi")
@@ -98,6 +103,10 @@
 (defmethod interpret :greet
   [{:keys [user]}]
   {:message (format "%s Hi buddy" user)})
+
+(defmethod interpret :thanks
+  [{:keys [user]}]
+  {:message (format "%s You're welcome" user)})
 
 (defmethod interpret :sakoboy
   [_]
