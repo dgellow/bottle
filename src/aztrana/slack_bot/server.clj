@@ -80,10 +80,10 @@
 (defmethod interpret :set-location
   [{:keys [verb-object user]}]
   (timbre/debug verb-object)
-  {:action (fn [] (mongcol/insert
+  {:action (fn [] (mongcol/upsert
                   @db-obj "users"
-                  {:_id user
-                   :location verb-object
+                  {:_id user}
+                  {:location verb-object
                    :name (state/id->name user)}))
    :message (format "%s Noted." user)})
 
