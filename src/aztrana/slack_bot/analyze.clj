@@ -3,7 +3,7 @@
             [clj-slack-client.team-state :as state]
             [monger.collection :as mongcol]
             [clojure.core.async :refer [>!!]]
-            [clojure.string :refer [join lower-case upper-case]]
+            [clojure.string :refer [join lower-case upper-case replace]]
             [aztrana.slack-bot.state :refer [db-obj ch-server-actions]]))
 
 (def bot-actions
