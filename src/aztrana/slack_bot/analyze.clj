@@ -182,7 +182,4 @@
 
 (defmethod interpret :default
   [{:keys [user]}]
-  {:message
-   (if (= "sako" (state/id->name user))
-     "uh?"
-     "Sorry mate, my actions are limited. Ask me to `help` you if you want to see what I can do for you.")})
+  {:message "Sorry mate, my actions are limited. Ask me to `help` you if you want to see what I can do for you."})
