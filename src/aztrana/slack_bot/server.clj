@@ -173,7 +173,7 @@
   (when-not (nil? @web-server)
     (@web-server :timeout 100)
     (reset! web-server nil)))
-(defn start-web!
+(defn start-web! []
   (reset! web-server (http/run-server #'web-handler {:port (env :port)})))
 
 (defn stop-app! []
