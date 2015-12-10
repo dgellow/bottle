@@ -15,6 +15,8 @@
    "[where is SOMEONE|SOMEONE location|location of SOMEONE]"
    "List current location of SOMEONE"
 
+   "eval CLOJURE_EXPRESSION" "(eval (read-string CLOJURE_EXPRESSION))"
+
    "[restart|take a nap]"
    "Shut me down, but I'll be back soon."
 
@@ -72,6 +74,10 @@
        (let [[_ verb-object] (re-find #"(?:(\w+)|<@(.+)>) location" text)]
          {:verb :ask-location
           :verb-object verb-object})
+       (re-find #"eval .*" text)
+       (let [[_ verb-object] (re-find #"eval \(.*\)" text)]
+         {:verb :eval
+          :verb-object verb-object})
        ;; hello
        (or (.contains text "hello")
           (.contains text "hi")
@@ -93,6 +99,12 @@
 (defmethod interpret :sakoboy
   [_]
   {:message "https://files.slack.com/files-pri/T038PG7EE-F0G9KRXE1/manny_in_real_life.jpg"})
+
+(defmethod interpret :eval
+  [{:keys [polite verb-object]}]
+  {:message (try (eval (read-string verb-object))
+                 (catch Exception e
+                   (format "_Exception_ \n```\n%s\n```" (.getMessage e))))})
 
 (defmethod interpret :help
   [{:keys [polite]}]
