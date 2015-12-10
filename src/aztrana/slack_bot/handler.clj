@@ -1,6 +1,5 @@
 (ns aztrana.slack-bot.handler
   (:require [taoensso.timbre :as timbre]
-            [clojure.string :refer [lower-case]]
             [clj-slack-client.team-state :as state]
             [clj-slack-client.rtm-transmit :as transmit]
             [aztrana.slack-bot.state :refer [bot-name]]
@@ -15,7 +14,7 @@
   [{:keys [user text channel] :as event}]
   (when (talk-to-bot? text)
     (let [{:keys [action message] :as res}
-          (interpret (parse user (lower-case text)))]
+          (interpret (parse user text))]
       (when message
         (transmit/say-message channel message))
       (when action

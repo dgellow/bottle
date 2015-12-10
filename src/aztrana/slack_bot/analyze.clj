@@ -3,7 +3,7 @@
             [clj-slack-client.team-state :as state]
             [monger.collection :as mongcol]
             [clojure.core.async :refer [>!!]]
-            [clojure.string :refer [join upper-case]]
+            [clojure.string :refer [join lower-case upper-case]]
             [aztrana.slack-bot.state :refer [db-obj ch-server-actions]]))
 
 (def bot-actions
@@ -32,8 +32,9 @@
                  :verb-object \"str\"
                  :user \"USERID\"
                  :polite boolean}"
-  [user text]
-  (let [politness (or (.contains text "pls")
+  [user raw-text]
+  (let [text (lower-case raw-text)
+        politness (or (.contains text "pls")
                      (.contains text "please"))]
     (timbre/debug text)
     (merge
@@ -74,8 +75,10 @@
        (let [[_ verb-object] (re-find #"(?:(\w+)|<@(.+)>) location" text)]
          {:verb :ask-location
           :verb-object verb-object})
-       (re-find #"eval .*" text)
-       (let [[_ verb-object] (re-find #"eval \(.*\)" text)]
+       (re-find #"eval (.*)" raw-text)
+       (let [[_ verb-object] (re-find #"eval (.*)" raw-text)]
+         (timbre/debug raw-text)
+         (timbre/debug verb-object)
          {:verb :eval
           :verb-object verb-object})
        ;; hello
