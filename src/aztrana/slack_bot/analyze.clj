@@ -23,6 +23,8 @@
    "leave us"
    "Shut me down. Definitely."
 
+   "table" ""
+
    "help" "Ask for help"})
 
 ;; Parsing
@@ -90,6 +92,8 @@
        (or (.contains text "hello")
           (.contains text "hi")
           (.contains text "hey")) {:verb :greet}
+       ;; table
+       (.contains text "table") {:verb :table}
        :else nil))))
 
 
@@ -192,3 +196,7 @@
 (defmethod interpret :default
   [{:keys [user]}]
   {:message "Sorry mate, my actions are limited. Ask me to `help` you if you want to see what I can do for you."})
+
+(defmethod interpret :table
+  [_]
+  {:message "What is a table? Whooo"})
