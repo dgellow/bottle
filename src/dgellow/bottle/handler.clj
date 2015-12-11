@@ -1,9 +1,9 @@
-(ns aztrana.slack-bot.handler
+(ns dgellow.bottle.handler
   (:require [taoensso.timbre :as timbre]
             [clj-slack-client.team-state :as state]
             [clj-slack-client.rtm-transmit :as transmit]
-            [aztrana.slack-bot.state :refer [bot-name]]
-            [aztrana.slack-bot.analyze :refer [parse interpret]]))
+            [dgellow.bottle.state :refer [bot-name]]
+            [dgellow.bottle.analyze :refer [parse interpret]]))
 
 (defn talk-to-bot? [text]
   (.contains text (state/name->id bot-name)))

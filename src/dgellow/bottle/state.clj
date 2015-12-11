@@ -1,4 +1,4 @@
-(ns aztrana.slack-bot.state
+(ns dgellow.bottle.state
   (:require [taoensso.timbre :as timbre]
             [environ.core :refer [env]]
             [clojure.core.async :refer [chan]]))

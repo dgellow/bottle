@@ -1,10 +1,10 @@
-(ns aztrana.slack-bot.analyze
+(ns dgellow.bottle.analyze
   (:require [taoensso.timbre :as timbre]
             [clj-slack-client.team-state :as state]
             [monger.collection :as mongcol]
             [clojure.core.async :refer [>!!]]
             [clojure.string :refer [join lower-case upper-case replace]]
-            [aztrana.slack-bot.state :refer [db-obj ch-server-actions]]))
+            [dgellow.bottle.state :refer [db-obj ch-server-actions]]))
 
 (def bot-actions
   {"[i'm|i am] [in|at] LOCATION" "Set your current location"

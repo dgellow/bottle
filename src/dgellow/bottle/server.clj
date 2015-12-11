@@ -1,14 +1,14 @@
-(ns aztrana.slack-bot.server
+(ns dgellow.bottle.server
   (:require [taoensso.timbre :as timbre]
             [environ.core :refer [env]]
             [monger.core :as mongo]
             [clj-slack-client.core :as slack]
             [org.httpkit.server :as http]
             [clojure.core.async :refer [go-loop <!]]
-            [aztrana.slack-bot.state
+            [dgellow.bottle.state
              :refer [db-conn db-obj db-uri running-slack?
                      slack-api-token ch-server-actions]]
-            [aztrana.slack-bot.handler :refer [handle-slack-events]])
+            [dgellow.bottle.handler :refer [handle-slack-events]])
   (:import [com.mongodb MongoOptions ServerAddress])
   (:gen-class))
 

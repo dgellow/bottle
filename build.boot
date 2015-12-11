@@ -9,11 +9,11 @@
                  [org.clojure/core.async "0.2.374"]
                  [org.clojure/clojure "1.7.0"]])
 
-(task-options! pom {:project 'aztrana/slack-bot
+(task-options! pom {:project 'dgellow/bottle
                     :version "0.1.0-SNAPSHOT"
-                    :description "A slack bot used at Aztrana"}
-               aot {:namespace #{'aztrana.slack-bot.server}}
-               jar {:main 'aztrana.slack-bot.server})
+                    :description "A chatops bot"}
+               aot {:namespace #{'dgellow.bottle.server}}
+               jar {:main 'dgellow.bottle.server})
 
 (deftask deps [])
 
