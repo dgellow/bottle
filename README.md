@@ -12,7 +12,7 @@
 (ns your.bot.namespace.core
   (:require [taoensso.timbre :as timbre]
             [environ.core :refer env]
-            [dgellow.bottle.bot :refer [defaction make-bot]])
+            [dgellow.bottle.bot :refer [defaction make-bot close-all! run-all!]])
   (:import [dgellow.bottle.bot SlackAdapter]))
 
 ;; Actions
