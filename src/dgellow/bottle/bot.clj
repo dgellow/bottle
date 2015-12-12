@@ -138,10 +138,3 @@
               "\n"
               (map #(format "- \"%s\": %s" (:pattern %)
                             (:doc (meta %))) (:actions bot))))}))
-
-(def bot (make-bot {:name "john_draper"
-           :actions [hello-action
-                     help-action]
-           :adapters [(SlackAdapter. "xoxb-16374091041-0I3AlyYyKpgQxQqC1CsGU13x")
-                      (IrcAdapter. "irc.foo.tld" "#fixme")]}))
-(run-all! bot)
