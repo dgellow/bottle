@@ -1,5 +1,7 @@
 # ![bottle](http://i.imgur.com/rjCWII1.png)
 
+bottle is a toolkit to create bots for your chat platform.
+
 [](dependency)
 ```clojure
 [dgellow/bottle "0.0.1-SNAPSHOT"] ;; latest release
@@ -8,7 +10,7 @@
 
 ## Usage
 
-```
+```clojure
 (ns your.bot.namespace.core
   (:require [taoensso.timbre :as timbre]
             [environ.core :refer env]
@@ -56,3 +58,7 @@
 (defn -main [& args]
   (start-bot!))
 ```
+
+## References
+
+See the presentation "[Chatops at GitHub](https://speakerdeck.com/jnewland/chatops-at-github)", also their bot engine [Hubot](https://hubot.github.com/).
