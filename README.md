@@ -1,6 +1,6 @@
-# ![bottle](http://i.imgur.com/rjCWII1.png)
+# A toolkit to create bots for your chat platform
 
-bottle is a toolkit to create bots for your chat platform.
+![bottle](http://i.imgur.com/rjCWII1.png)
 
 [](dependency)
 ```clojure
