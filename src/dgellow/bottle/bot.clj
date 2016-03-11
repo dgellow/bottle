@@ -11,7 +11,7 @@
          {:timestamp (str (java.util.Date.))}))
 
 (defprotocol ChatAdapts
-  (send-to [x envelope msgs])
+  (say-to [x envelope])
   (reply-to [x envelope msgs])
   (set-topic [x envelope msgs])
   (start! [x bot])
@@ -67,9 +67,10 @@
   ;;   (let [conn (get-in @(:state bot) [:adapters :slack :conn])
   ;;         users (:users (team-state/get-team-state))]
   ;;     (first (filter #(= id (:id %)) users))))
-  ;; (send-to [_ envelope msgs]
-  ;;   (format "@%s: %s" (:from envelope)
-  ;;           (clojure.string/join "\n" msgs)))
+  (say-to [_ {:keys [to room message] :as envelope}]
+    (let [target (or (team-state/name->id to)
+                    (:id (team-state/name->channel room)))]
+      (transmit/say-message target message)))
   (reply-to [_ envelope message]
     (transmit/say-message (:to envelope) message))
   (talk-to-bot? [this bot message]
