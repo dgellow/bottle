@@ -14,7 +14,7 @@
 (ns your.bot.namespace.core
   (:require [taoensso.timbre :as timbre]
             [environ.core :refer env]
-            [dgellow.bottle.bot :refer [defaction make-bot close-all! run-all!]])
+            [dgellow.bottle.bot :refer [defaction make-bot stop-all! start-all!]])
   (:import [dgellow.bottle.bot SlackAdapter]))
 
 ;; Actions
@@ -48,12 +48,12 @@
   (atom bot-spec))
 (defn stop-bot! []
   (timbre/info "Stopping bot...")
-  (close-all! bot))
+  (stop-all! bot))
 (defn start-bot! []
   (when @bot
     (stop-bot!))
   (timbre/info "Starting bot...")
-  (run-all! bot))
+  (start-all! bot))
 
 (defn -main [& args]
   (start-bot!))

@@ -5,26 +5,22 @@
             [clj-slack-client.rtm-transmit :as transmit]))
 
 (defprotocol ChatAdapts
-  (send [x envelope msgs])
-  (reply [x envelope msgs])
-  (topic [x envelope msgs])
-  (play [x envelope msgs])
-  (receive [x message])
-  (run! [x bot])
-  (close! [x])
+  (send-to [x envelope msgs])
+  (reply-to [x envelope msgs])
+  (set-topic [x envelope msgs])
+  (start! [x bot])
+  (stop! [x])
   (all-users [x bot])
   (user-by-id [x id])
   (user-by-name [x name])
   (adapter-kind [x])
-  (create-handler [x actions])
   (talk-to-bot? [x bot message]))
-
 
 (defrecord IrcAdapter [server channel]
   ChatAdapts
   (adapter-kind [_] :irc)
-  (run! [_ bot] nil)
-  (close! [_] nil))
+  (start! [_ bot] nil)
+  (stop! [_] nil))
 
 (defmulti handle-slack-events (fn [event] ((juxt :type :subtype) event)))
 
@@ -65,16 +61,16 @@
   ;;   (let [conn (get-in @(:state bot) [:adapters :slack :conn])
   ;;         users (:users (team-state/get-team-state))]
   ;;     (first (filter #(= id (:id %)) users))))
-  ;; (send [_ envelope msgs]
+  ;; (send-to [_ envelope msgs]
   ;;   (format "@%s: %s" (:from envelope)
   ;;           (clojure.string/join "\n" msgs)))
-  (reply [_ envelope message]
+  (reply-to [_ envelope message]
     (transmit/say-message (:to envelope) message))
   (talk-to-bot? [this bot message]
     (.contains message (team-state/name->id (:name bot))))
-  (close! [_]
+  (stop! [_]
     (slack/disconnect))
-  (run! [this bot]
+  (start! [this bot]
     (let [{:keys [actions]} bot]
       (defmethod handle-slack-events ["message" nil]
         [{:keys [user text channel] :as event}]
@@ -84,21 +80,21 @@
             (timbre/debug "-- Handler \"message\" --")
             (timbre/debug res)
             (when message
-              (reply this (assoc envelope :to (:to envelope channel)) message)))))
+              (reply-to this (assoc envelope :to (:to envelope channel)) message)))))
       (slack/connect token handle-slack-events))))
 
 (defprotocol BotLike
-  (run-all! [x])
-  (close-all! [x]))
+  (start-all! [x])
+  (stop-all! [x]))
 
 (defrecord Bot [name actions adapters]
   BotLike
-  (run-all! [this]
+  (start-all! [this]
     (doseq [[_ adapter] adapters]
-      (run! adapter this)))
-  (close-all! [_]
+      (start! adapter this)))
+  (stop-all! [_]
     (doseq [[_ adapter] adapters]
-      (close! adapter))))
+      (stop! adapter))))
 
 (defn make-bot [{:keys [name actions adapters]}]
   (merge (Bot. name actions
