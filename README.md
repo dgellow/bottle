@@ -4,7 +4,7 @@
 
 [](dependency)
 ```clojure
-[dgellow/bottle "0.1.1-SNAPSHOT"] ;; latest release
+[dgellow/bottle "0.2.0-SNAPSHOT"] ;; latest release
 ```
 [](/dependency)
 
