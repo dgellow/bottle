@@ -4,6 +4,12 @@
             [clj-slack-client.team-state :as team-state]
             [clj-slack-client.rtm-transmit :as transmit]))
 
+(defrecord Envelope [from to room message])
+
+(defn make-envelope [map]
+  (merge (map->Envelope map)
+         {:timestamp (str (java.util.Date.))}))
+
 (defprotocol ChatAdapts
   (send-to [x envelope msgs])
   (reply-to [x envelope msgs])

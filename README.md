@@ -21,18 +21,18 @@
 (defaction hello-action
   "Greets the user"
   #"hello"
-  (fn [_ _] {:message "helol mate"}))
+  (fn [_ _] (make-envelope {:message "helol mate"})))
 
 (defaction help-action
   "Display help"
   #"help"
   (fn [_ {:keys [bot]}]
-    {:message
-     (format "\n%s\n"
-             (clojure.string/join
-              "\n"
-              (map #(format "- \"%s\": %s" (:pattern %)
-                            (:doc (meta %))) (:actions bot))))}))
+    (make-envelope {:message
+                    (format "\n%s\n"
+                            (clojure.string/join
+                             "\n"
+                             (map #(format "- \"%s\": %s" (:pattern %)
+                                           (:doc (meta %))) (:actions bot))))})))
 
 ;; Bot definition
 (def bot-spec
